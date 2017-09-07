@@ -28,7 +28,8 @@
     :default nil]
    ["-j" "--path PATH" "Path to Jenkins on Host"
     :default "/"]
-   ["-s" "--https"]])
+   ["-s" "--https"]
+   ["-?" "--help"]])
 
 (defn usage [options-summary]
   (->> ["Downloads artifacts from jenkins servers."
@@ -51,7 +52,8 @@
     (cond
       errors
       {:exit-message (error-msg errors)}
-
+      (:help options)
+      {:exit-message (usage summary) :ok? true}
       :else
       {:options options})))
 
@@ -117,7 +119,7 @@
       (download-artifacts-to-dir (:name proj-map) (:artifacts proj-map) output-dir))))
 
 (defn -main [& args]
-  (let [{:keys [options exit-message]} (validate-args args)]
+  (let [{:keys [options exit-message ok?]} (validate-args args)]
     (if exit-message
-      (exit 1 exit-message)
+      (exit (if ok? 0 1) exit-message)
       (download-artifacts options))))
