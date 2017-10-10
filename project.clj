@@ -1,4 +1,4 @@
-(defproject jenkins-dl "0.1.0-SNAPSHOT"
+(defproject jenkins-dl "0.1.0"
   :description "Small Utility for Downloading Artifacts from Jenkins-CI"
   :url "https://github.com/paper-tiger/jenkins-dl"
   :license {:name "Eclipse Public License"
